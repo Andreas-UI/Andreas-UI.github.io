@@ -1,0 +1,122 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "data": {
+        "url": "https://raw.githubusercontent.com/Andreas-UI/FIT3179-HW9/main/data/VEHICLE_AGG3.csv"
+    },
+    "width": 600,
+    "height": 400,
+    "params": [
+        {
+            "name": "year_selection",
+            "value": 2000,
+            "bind": {
+                "input": "range",
+                "min": 2000,
+                "max": 2005,
+                "step": 1,
+                "name": "Year: "
+            }
+        },
+        {
+            "name": "vehicle_select",
+            "bind": {
+                "input": "select",
+                "options": [
+                    null,
+                    "Bicycle",
+                    "Bus/Coach",
+                    "Car",
+                    "Horse (ridden or drawn)",
+                    "Mini Bus(9-13 seats)",
+                    "Moped",
+                    "Motor Cycle",
+                    "Motor Scooter",
+                    "Other Vehicle",
+                    "Panel Van",
+                    "Prime Mover (No of Trailers Unknown)",
+                    "Prime Mover Only",
+                    "Rigid Truck(Weight Unknown)",
+                    "Station Wagon",
+                    "Taxi",
+                    "Train",
+                    "Tram",
+                    "Unknown",
+                    "Utility"
+                ],
+                "labels": [
+                    "Show All",
+                    "Bicycle",
+                    "Bus/Coach",
+                    "Car",
+                    "Horse (ridden or drawn)",
+                    "Mini Bus(9-13 seats)",
+                    "Moped",
+                    "Motor Cycle",
+                    "Motor Scooter",
+                    "Other Vehicle",
+                    "Panel Van",
+                    "Prime Mover (No of Trailers Unknown)",
+                    "Prime Mover Only",
+                    "Rigid Truck(Weight Unknown)",
+                    "Station Wagon",
+                    "Taxi",
+                    "Train",
+                    "Tram",
+                    "Unknown",
+                    "Utility"
+                ],
+                "name": "Accident Check: "
+            }
+        }
+    ],
+    "mark": {
+        "type": "circle",
+        "opacity": 0.8,
+        "stroke": "black",
+        "strokeWidth": 1
+    },
+    "transform": [
+        {
+            "filter": {
+                "timeUnit": "year",
+                "field": "ACCIDENTDATE_YEAR",
+                "equal": "year_selection"
+            }
+        },
+        {
+            "filter": "vehicle_select == null || datum['Vehicle Type Desc'] === vehicle_select"
+        }
+    ],
+    "encoding": {
+        "x": {
+            "field": "ACCIDENTDATE_MONTH",
+            "type": "nominal",
+            "axis": {
+                "title": "Month"
+            }
+        },
+        "y": {
+            "field": "Vehicle Type Desc",
+            "type": "nominal",
+            "axis": {
+                "title": ""
+            }
+        },
+        "size": {
+            "field": "ACCIDENT_NO",
+            "type": "quantitative",
+            "title": "Annual Global Deaths",
+            "legend": {
+                "clipHeight": 30
+            }
+        },
+        "color": {
+            "field": "Vehicle Type Desc",
+            "type": "nominal",
+            "legend": null
+        },
+        "tooltip": {
+            "field": "ACCIDENT_NO"
+        }
+    }
+}
